@@ -1,0 +1,81 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Install homebrew
+      include_role:
+        name: geerlingguy.mac.homebrew
+
+    - name: Make sure homebrew bin is in path
+      ansible.builtin.lineinfile:
+        path: /etc/paths
+        state: present
+        line: '/opt/homebrew/bin'
+      become: true
+      become_user: root
+
+    - name: 'add custom homebrew repos'
+      community.general.homebrew_tap:
+        name: [
+          homebrew/cask-versions,
+        ]
+    - name: Install core packages via brew casks
+      community.general.homebrew_cask:
+        name: "{{ item }}"
+      ignore_errors: yes
+      with_items:
+        - amethyst
+        - 1password
+        - discord
+        - docker
+        - google-chrome
+        - google-cloud-sdk
+        - ngrok
+        - slack
+        - raycast
+        - telegram
+        - visual-studio-code
+        - vlc
+
+    - name: "Install homebrew packages"
+      community.general.homebrew:
+        name: [
+          'awscli',
+          'coreutils',
+          'curl',
+          'gh',
+          'fzf',
+          'htop',
+          'imagemagick@6',
+          'mas',
+          'openssl' ,
+          'tmux',
+          'volta',
+          'zsh',
+        ]
+        state: present
+        update_homebrew: yes
+
+    - name: "Configure git default branch"
+      community.general.git_config:
+        name: init.defaultBranch
+        scope: global
+        value: main
+
+    - name: "Configure git user name"
+      community.general.git_config:
+        name: user.name 
+        scope: global
+        value: nic
+
+    - name: "Configure git email"
+      community.general.git_config:
+        name: user.email
+        scope: global
+        value: nic.wilson@gmail.com
+
+    - name: "Install from Mac app store"
+      shell: mas install {{ item }}
+      with_items:
+        - 905953485 # NordVPN
+
+

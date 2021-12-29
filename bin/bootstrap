@@ -1,0 +1,10 @@
+#!/bin/sh
+xcode-select --install
+sudo xcodebuild -license
+cat pypath >> ~/.zshrc
+source ~/.zshrc
+pip3 install --upgrade pip
+pip3 install ansible
+ansible-galaxy install -r requirements.yml
+
+ansible-playbook -i "localhost," -c local playbook.yml --ask-become-pass
