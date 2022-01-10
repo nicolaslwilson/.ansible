@@ -77,5 +77,6 @@
       shell: mas install {{ item }}
       with_items:
         - 905953485 # NordVPN
+        - 937984704 # Amphetamine
 
 
