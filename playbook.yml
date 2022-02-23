@@ -50,6 +50,7 @@
           'openssl' ,
           'tmux',
           'volta',
+          'solana',
           'zsh',
         ]
         state: present
