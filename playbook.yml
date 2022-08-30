@@ -23,8 +23,8 @@
         name: "{{ item }}"
       ignore_errors: yes
       with_items:
-        - amethyst
         - 1password
+        - alacritty
         - discord
         - docker
         - google-chrome
@@ -35,6 +35,7 @@
         - telegram
         - visual-studio-code
         - vlc
+        - karabiner-elements
 
     - name: "Install homebrew packages"
       community.general.homebrew:
@@ -79,5 +80,7 @@
       with_items:
         - 905953485 # NordVPN
         - 937984704 # Amphetamine
+    - name: "Enable key repeat for vscode"
+      shell: defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
 
 
